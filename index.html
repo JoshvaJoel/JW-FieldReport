@@ -29,9 +29,9 @@
                 </div>
             </div>
 
-            <!-- Role / Category Chips Selection -->
+            <!-- Role Selection Chips -->
             <div class="role-section" id="roleSection">
-                <label class="role-title">Designation / Role: <span class="required-star">*</span></label>
+                <label class="role-title">Select your role: <span class="required-star">*</span></label>
                 <div class="chip-group" id="chipGroup">
                     <button type="button" class="chip-btn" data-value="Publisher">Publisher</button>
                     <button type="button" class="chip-btn" data-value="Auxiliary Pioneer">Auxiliary Pioneer</button>
@@ -39,7 +39,7 @@
                 </div>
                 <input type="hidden" id="category" name="category" required>
                 <div class="role-error-msg" id="roleError" style="display: none;">
-                    ⚠️ Please select your designation / role before submitting.
+                    ⚠️ Please select your role before submitting.
                 </div>
             </div>
 
@@ -65,10 +65,10 @@
                             <input type="number" id="bibleStudies" name="bibleStudies" inputmode="numeric" min="0" step="1" placeholder="0">
                         </td>
                     </tr>
-                    <tr>
+                    <tr id="hoursRow" style="display: none;">
                         <td class="label-cell">
                             Hours (if auxiliary, regular, or special pioneer or field missionary)
-                            <span id="hoursBadge" class="req-badge"></span>
+                            <span id="hoursBadge" class="req-badge required-mode">* Required</span>
                         </td>
                         <td class="input-cell">
                             <input type="number" id="hours" name="hours" inputmode="numeric" min="0" step="1" placeholder="0">

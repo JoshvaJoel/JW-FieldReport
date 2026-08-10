@@ -8,8 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const chipButtons = document.querySelectorAll('.chip-btn');
     const sharedMinistryCheckbox = document.getElementById('sharedMinistry');
     const bibleStudiesInput = document.getElementById('bibleStudies');
+    const hoursRow = document.getElementById('hoursRow');
     const hoursInput = document.getElementById('hours');
-    const hoursBadge = document.getElementById('hoursBadge');
     const remarksInput = document.getElementById('remarks');
     const submitBtn = document.getElementById('submitBtn');
 
@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
         nameInput.value = savedName;
     }
 
-    // 3. Handle Role/Category Chip Selection
+    // 3. Handle Role Selection
     chipButtons.forEach(btn => {
         btn.addEventListener('click', () => {
             const selectedRole = btn.getAttribute('data-value');
@@ -77,16 +77,15 @@ document.addEventListener('DOMContentLoaded', () => {
             roleSection.classList.remove('has-error');
             roleError.style.display = 'none';
 
-            // Update Hours mandatory/optional rules
+            // Show Hours ONLY for Auxiliary Pioneer or Regular Pioneer; Hide for Publisher
             if (selectedRole === 'Auxiliary Pioneer' || selectedRole === 'Regular Pioneer') {
+                hoursRow.style.display = 'table-row';
                 hoursInput.required = true;
-                hoursBadge.textContent = '* Required';
-                hoursBadge.className = 'req-badge required-mode';
             } else {
                 // Publisher
+                hoursRow.style.display = 'none';
                 hoursInput.required = false;
-                hoursBadge.textContent = '(Optional)';
-                hoursBadge.className = 'req-badge optional-mode';
+                hoursInput.value = ''; // Reset value when hidden
             }
         });
     });
@@ -106,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Validate basic native fields (e.g. Name required, Hours required if pioneer)
+        // Validate basic native fields
         if (!form.checkValidity()) {
             form.reportValidity();
             return;
@@ -128,14 +127,15 @@ document.addEventListener('DOMContentLoaded', () => {
         let message = `FIELD SERVICE REPORT\n\n`;
         message += `Name: ${name}\n`;
         message += `Month: ${month}\n`;
-        message += `Designation: ${selectedRole}\n\n`;
+        message += `Role: ${selectedRole}\n\n`;
         message += `Shared in Ministry: ${sharedMinistry}\n`;
 
         if (bibleStudies !== '') {
             message += `Bible Studies: ${bibleStudies}\n`;
         }
 
-        if (hours !== '') {
+        // Include hours only if Pioneer role and hours provided
+        if ((selectedRole === 'Auxiliary Pioneer' || selectedRole === 'Regular Pioneer') && hours !== '') {
             message += `Hours: ${hours}\n`;
         }
 

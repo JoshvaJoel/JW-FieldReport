@@ -108,7 +108,7 @@ h1 {
     border-bottom: 2px solid #2563eb;
 }
 
-/* Role / Category Chips Selector */
+/* Role Chips Selector */
 .role-section {
     background-color: #fafafa;
     border: 1px solid #e5e7eb;
@@ -189,7 +189,7 @@ h1 {
 
 .report-table td {
     border: 1px solid #000;
-    padding: 10px 12px;
+    padding: 12px;
     font-size: 0.98rem;
     vertical-align: middle;
 }
@@ -203,6 +203,7 @@ h1 {
     width: 24%;
     padding: 0;
     text-align: center;
+    vertical-align: middle;
 }
 
 .req-badge {
@@ -219,18 +220,12 @@ h1 {
     background-color: #fee2e2;
 }
 
-.req-badge.optional-mode {
-    color: #4b5563;
-    background-color: #f3f4f6;
-    font-weight: normal;
-}
-
 .input-cell input[type="number"] {
     width: 100%;
-    height: 48px;
+    height: 52px;
     border: none;
     padding: 8px 4px;
-    font-size: 1.15rem;
+    font-size: 1.2rem;
     font-weight: bold;
     text-align: center;
     background-color: transparent;
@@ -244,21 +239,21 @@ h1 {
     margin: 0;
 }
 
-/* Checkbox Cell */
+/* Checkbox Cell - Centered Rectangle Fit */
 .checkbox-cell {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 48px;
+    height: 52px;
 }
 
 .custom-checkbox {
-    display: inline-block;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
     position: relative;
-    width: 26px;
-    height: 26px;
+    width: 30px;
+    height: 30px;
     cursor: pointer;
     user-select: none;
+    vertical-align: middle;
 }
 
 .custom-checkbox input {
@@ -273,12 +268,12 @@ h1 {
     position: absolute;
     top: 0;
     left: 0;
-    height: 26px;
-    width: 26px;
+    height: 30px;
+    width: 30px;
     background-color: #fff;
     border: 2px solid #000;
-    border-radius: 3px;
-    transition: background-color 0.15s ease;
+    border-radius: 4px;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
 }
 
 .custom-checkbox:hover input ~ .checkmark {
@@ -287,6 +282,7 @@ h1 {
 
 .custom-checkbox input:checked ~ .checkmark {
     background-color: #000;
+    border-color: #000;
 }
 
 .checkmark:after {
@@ -300,12 +296,12 @@ h1 {
 }
 
 .custom-checkbox .checkmark:after {
-    left: 8px;
+    left: 9px;
     top: 4px;
-    width: 6px;
-    height: 12px;
+    width: 7px;
+    height: 14px;
     border: solid white;
-    border-width: 0 2.5px 2.5px 0;
+    border-width: 0 3px 3px 0;
     transform: rotate(45deg);
 }
 
