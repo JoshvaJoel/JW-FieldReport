@@ -27,7 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const commentsLabel = document.getElementById('commentsLabel');
     
     const formTitle = document.getElementById('formTitle');
-    const footerCodeText = document.getElementById('footerCodeText');
     const submitBtn = document.getElementById('submitBtn');
     
     const tipToggleBtn = document.getElementById('tipToggleBtn');
@@ -58,16 +57,16 @@ document.addEventListener('DOMContentLoaded', () => {
             hoursReq: '* Required',
             commentsLabel: 'Comments:',
             commentsPlaceholder: 'Enter comments here...',
-            footerCode: 'S-4-E 11/23',
             submitBtn: 'Submit via WhatsApp',
             submitBtnProgress: 'Opening WhatsApp...',
-            whatsappTitleFunc: (month) => `FIELD SERVICE REPORT for the Month of ${month.toUpperCase()}`,
-            whatsappName: 'Name',
-            whatsappRole: 'Service Status',
-            whatsappShared: 'Participated in Ministry',
-            whatsappStudies: 'Bible Studies',
-            whatsappHours: 'Hours',
-            whatsappComments: 'Comments',
+            whatsappTitle: '*FIELD SERVICE REPORT*',
+            whatsappMonth: '*Month:*',
+            whatsappName: '*Name:*',
+            whatsappRole: '*Service Status:*',
+            whatsappShared: '*Participated in Ministry:*',
+            whatsappStudies: '*Bible Studies:*',
+            whatsappHours: '*Hours:*',
+            whatsappComments: '*Comments:*',
             yes: 'Yes',
             no: 'No',
             months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
@@ -92,16 +91,16 @@ document.addEventListener('DOMContentLoaded', () => {
             hoursReq: '* தேவை',
             commentsLabel: 'குறிப்புகள்:',
             commentsPlaceholder: 'இங்கே குறிப்புகளை உள்ளிடவும்...',
-            footerCode: 'S-4-TL 11/23',
             submitBtn: 'வாட்ஸ்அப் வழியாக அனுப்புக',
             submitBtnProgress: 'WhatsApp திறக்கிறது...',
-            whatsappTitleFunc: (month) => `${month} மாதத்திற்கான வெளி ஊழிய அறிக்கை`,
-            whatsappName: 'பெயர்',
-            whatsappRole: 'சேவை நிலை',
-            whatsappShared: 'ஊழியத்தில் கலந்துகொண்டீர்களா',
-            whatsappStudies: 'பைபிள் படிப்புகள்',
-            whatsappHours: 'மணிநேரங்கள்',
-            whatsappComments: 'குறிப்புகள்',
+            whatsappTitle: '*வெளி ஊழிய அறிக்கை*',
+            whatsappMonth: '*மாதம்:*',
+            whatsappName: '*பெயர்:*',
+            whatsappRole: '*சேவை நிலை:*',
+            whatsappShared: '*ஊழியத்தில் கலந்துகொண்டீர்களா:*',
+            whatsappStudies: '*பைபிள் படிப்புகள்:*',
+            whatsappHours: '*மணிநேரங்கள்:*',
+            whatsappComments: '*குறிப்புகள்:*',
             yes: 'ஆம்',
             no: 'இல்லை',
             months: ["ஜனவரி", "பிப்ரவரி", "மார்ச்", "ஏப்ரல்", "மே", "ஜூன்", "ஜூலை", "ஆகஸ்ட்", "செப்டம்பர்", "அக்டோபர்", "நவம்பர்", "டிசம்பர்"]
@@ -188,7 +187,6 @@ document.addEventListener('DOMContentLoaded', () => {
         
         commentsLabel.textContent = t.commentsLabel;
         remarksInput.placeholder = t.commentsPlaceholder;
-        footerCodeText.textContent = t.footerCode;
         
         if (!submitBtn.disabled) {
             submitBtn.textContent = t.submitBtn;
@@ -278,23 +276,24 @@ document.addEventListener('DOMContentLoaded', () => {
         const hours = hoursInput.value.trim();
         const remarks = remarksInput.value.trim();
 
-        // Construct formatted report message with month in header
-        let message = `${t.whatsappTitleFunc(month)}\n\n`;
-        message += `${t.whatsappName}: ${name}\n`;
-        message += `${t.whatsappRole}: ${roleLocalized}\n\n`;
-        message += `${t.whatsappShared}: ${sharedMinistry}\n`;
+        // Construct formatted report message matching standard template
+        let message = `${t.whatsappTitle}\n`;
+        message += `${t.whatsappMonth} ${month}\n\n`;
+        message += `${t.whatsappName} ${name}\n`;
+        message += `${t.whatsappRole} ${roleLocalized}\n\n`;
+        message += `${t.whatsappShared} ${sharedMinistry}\n`;
 
         if (bibleStudies !== '') {
-            message += `${t.whatsappStudies}: ${bibleStudies}\n`;
+            message += `${t.whatsappStudies} ${bibleStudies}\n`;
         }
 
         // Include hours only if Pioneer role and hours provided
         if ((selectedRoleKey === 'Auxiliary Pioneer' || selectedRoleKey === 'Regular Pioneer') && hours !== '') {
-            message += `${t.whatsappHours}: ${hours}\n`;
+            message += `${t.whatsappHours} ${hours}\n`;
         }
 
         if (remarks !== '') {
-            message += `${t.whatsappComments}: ${remarks}\n`;
+            message += `${t.whatsappComments} ${remarks}\n`;
         }
 
         // Encode message for WhatsApp

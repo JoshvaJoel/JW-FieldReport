@@ -401,18 +401,6 @@ h1 {
     color: #000;
 }
 
-/* Form Metadata Footer (S-4-E / S-4-TL 11/23 and 1/1) */
-.form-footer-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 0.76rem;
-    font-family: Arial, sans-serif;
-    color: #4b5563;
-    margin-bottom: 10px;
-    padding: 0 2px;
-}
-
 /* Submit Button */
 button[type="submit"] {
     width: 100%;
