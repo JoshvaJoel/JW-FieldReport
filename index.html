@@ -17,52 +17,76 @@
             <h1>FIELD SERVICE REPORT</h1>
         </header>
 
-        <form id="reportForm">
+        <form id="reportForm" novalidate>
             <div class="top-fields">
                 <div class="line-field">
                     <label for="name">Name:</label>
-                    <input type="text" id="name" name="name" required>
+                    <input type="text" id="name" name="name" required placeholder="Enter your name">
                 </div>
                 <div class="line-field">
-                    <label for="category">Category:</label>
-                    <select id="category" name="category" required>
-                        <option value="" disabled selected></option>
-                        <option value="Publisher">Publisher</option>
-                        <option value="Auxiliary Pioneer">Auxiliary Pioneer</option>
-                        <option value="Regular Pioneer">Regular Pioneer</option>
-                    </select>
+                    <label for="month">Month:</label>
+                    <select id="month" name="month" required></select>
                 </div>
             </div>
 
+            <!-- Role / Category Chips Selection -->
+            <div class="role-section" id="roleSection">
+                <label class="role-title">Designation / Role: <span class="required-star">*</span></label>
+                <div class="chip-group" id="chipGroup">
+                    <button type="button" class="chip-btn" data-value="Publisher">Publisher</button>
+                    <button type="button" class="chip-btn" data-value="Auxiliary Pioneer">Auxiliary Pioneer</button>
+                    <button type="button" class="chip-btn" data-value="Regular Pioneer">Regular Pioneer</button>
+                </div>
+                <input type="hidden" id="category" name="category" required>
+                <div class="role-error-msg" id="roleError" style="display: none;">
+                    ⚠️ Please select your designation / role before submitting.
+                </div>
+            </div>
+
+            <!-- S-4-E Report Table -->
             <table class="report-table">
                 <tbody>
                     <tr>
-                        <td>Field Activity</td>
-                        <td class="input-cell">
-                            <div class="radio-cell">
-                                <label><input type="radio" name="fieldActivity" value="Yes" required> Yes</label>
-                                <label><input type="radio" name="fieldActivity" value="No" required> No</label>
-                            </div>
+                        <td class="label-cell">
+                            Check the box if you shared in any form of the ministry during the month
                         </td>
-                    </tr>
-                    <tr id="hoursRow" style="display: none;">
-                        <td>Hours</td>
-                        <td class="input-cell">
-                            <input type="number" id="hours" name="hours" inputmode="numeric" min="0" step="1">
+                        <td class="input-cell checkbox-cell">
+                            <label class="custom-checkbox">
+                                <input type="checkbox" id="sharedMinistry" name="sharedMinistry" checked>
+                                <span class="checkmark"></span>
+                            </label>
                         </td>
                     </tr>
                     <tr>
-                        <td>Bible Studies</td>
+                        <td class="label-cell">
+                            Number of <em>different</em> Bible studies conducted
+                        </td>
                         <td class="input-cell">
-                            <input type="number" id="bibleStudies" name="bibleStudies" inputmode="numeric" min="0" step="1">
+                            <input type="number" id="bibleStudies" name="bibleStudies" inputmode="numeric" min="0" step="1" placeholder="0">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">
+                            Hours (if auxiliary, regular, or special pioneer or field missionary)
+                            <span id="hoursBadge" class="req-badge"></span>
+                        </td>
+                        <td class="input-cell">
+                            <input type="number" id="hours" name="hours" inputmode="numeric" min="0" step="1" placeholder="0">
                         </td>
                     </tr>
                 </tbody>
             </table>
 
+            <!-- Comments Box -->
             <div class="comments-box">
-                <label for="remarks">Remarks:</label>
-                <textarea id="remarks" name="remarks"></textarea>
+                <label for="remarks">Comments:</label>
+                <textarea id="remarks" name="remarks" placeholder="Enter comments here..."></textarea>
+            </div>
+
+            <!-- S-4-E Form Metadata Footer -->
+            <div class="form-footer-meta">
+                <span>S-4-E 11/23</span>
+                <span>1/1</span>
             </div>
 
             <button type="submit" id="submitBtn">Submit via WhatsApp</button>
