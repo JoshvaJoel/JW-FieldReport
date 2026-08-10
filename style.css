@@ -208,23 +208,31 @@ h1 {
 .chip-group {
     display: flex;
     gap: 6px;
+    flex-wrap: wrap;
 }
 
 .chip-btn {
-    flex: 1;
-    padding: 6px 6px;
+    flex: 1 1 0px;
+    min-width: 0;
+    padding: 6px 4px;
     border: 1.5px solid #d1d5db;
     background-color: #fff;
     color: #374151;
     border-radius: 16px;
-    font-size: 0.78rem;
+    font-size: 0.76rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
     text-align: center;
     outline: none;
     -webkit-tap-highlight-color: transparent;
-    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 40px;
+    line-height: 1.25;
+    word-break: keep-all;
+    white-space: normal;
 }
 
 .chip-btn:hover {
@@ -438,5 +446,19 @@ button[type="submit"]:disabled {
     .input-cell input[type="number"],
     .comments-box textarea {
         font-size: 16px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .role-section {
+        padding: 8px 6px;
+    }
+    .chip-group {
+        gap: 4px;
+    }
+    .chip-btn {
+        font-size: 0.72rem;
+        padding: 5px 3px;
+        min-height: 38px;
     }
 }
