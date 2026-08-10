@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Field Service Report</title>
+    <link rel="icon" href="https://files.joshva.in/static/jw_favicon.ico">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="info-note">
+                <p><strong>Tip:</strong> For easier sharing, add the recipient's WhatsApp number to the link.</p>
+                <code>https://jw-fieldreport.pages.dev/?to=919876543210</code>
+            </div>
+            <h1>FIELD SERVICE REPORT</h1>
+        </header>
+
+        <form id="reportForm">
+            <div class="top-fields">
+                <div class="line-field">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="line-field">
+                    <label for="category">Category:</label>
+                    <select id="category" name="category" required>
+                        <option value="" disabled selected></option>
+                        <option value="Publisher">Publisher</option>
+                        <option value="Auxiliary Pioneer">Auxiliary Pioneer</option>
+                        <option value="Regular Pioneer">Regular Pioneer</option>
+                    </select>
+                </div>
+            </div>
+
+            <table class="report-table">
+                <tbody>
+                    <tr>
+                        <td>Field Activity</td>
+                        <td class="input-cell">
+                            <div class="radio-cell">
+                                <label><input type="radio" name="fieldActivity" value="Yes" required> Yes</label>
+                                <label><input type="radio" name="fieldActivity" value="No" required> No</label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr id="hoursRow" style="display: none;">
+                        <td>Hours</td>
+                        <td class="input-cell">
+                            <input type="number" id="hours" name="hours" inputmode="numeric" min="0" step="1">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Bible Studies</td>
+                        <td class="input-cell">
+                            <input type="number" id="bibleStudies" name="bibleStudies" inputmode="numeric" min="0" step="1">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="comments-box">
+                <label for="remarks">Remarks:</label>
+                <textarea id="remarks" name="remarks"></textarea>
+            </div>
+
+            <button type="submit" id="submitBtn">Submit via WhatsApp</button>
+        </form>
+
+        <footer>
+            <a href="https://jw-attendance.pages.dev/" target="_blank" rel="noopener noreferrer">Attendance Sharing</a>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
