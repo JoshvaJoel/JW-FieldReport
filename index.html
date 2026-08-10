@@ -10,44 +10,59 @@
 <body>
     <div class="container">
         <header>
-            <div class="info-note">
-                <p><strong>Tip:</strong> For easier sharing, add the recipient's WhatsApp number to the link.</p>
-                <code>https://jw-fieldreport.pages.dev/?to=919876543210</code>
+            <div class="info-note-container">
+                <button type="button" class="tip-toggle-btn" id="tipToggleBtn">
+                    <span id="tipBtnText">💡 Tip: Adding recipient number</span> <span class="arrow">▼</span>
+                </button>
+                <div class="info-note" id="infoNote" style="display: none;">
+                    <p id="tipNoteDesc">For direct sharing, add recipient's WhatsApp number to link:</p>
+                    <code>https://jw-fieldreport.pages.dev/?to=919876543210</code>
+                </div>
             </div>
-            <h1>FIELD SERVICE REPORT</h1>
+
+            <!-- Language Switcher below Tip -->
+            <div class="lang-bar">
+                <label for="langSelect" id="langSelectLabel">🌐 Language / மொழி:</label>
+                <select id="langSelect">
+                    <option value="en">English</option>
+                    <option value="ta">தமிழ் (Tamil)</option>
+                </select>
+            </div>
+
+            <h1 id="formTitle">FIELD SERVICE REPORT</h1>
         </header>
 
         <form id="reportForm" novalidate>
             <div class="top-fields">
                 <div class="line-field">
-                    <label for="name">Name:</label>
+                    <label for="name" id="nameLabel">Name:</label>
                     <input type="text" id="name" name="name" required placeholder="Enter your name">
                 </div>
                 <div class="line-field">
-                    <label for="month">Month:</label>
+                    <label for="month" id="monthLabel">Month:</label>
                     <select id="month" name="month" required></select>
                 </div>
             </div>
 
-            <!-- Role Selection Chips -->
+            <!-- Role / Service Status Selection Chips -->
             <div class="role-section" id="roleSection">
-                <label class="role-title">Select your role: <span class="required-star">*</span></label>
+                <label class="role-title" id="roleTitleLabel">Service Status: <span class="required-star">*</span></label>
                 <div class="chip-group" id="chipGroup">
-                    <button type="button" class="chip-btn" data-value="Publisher">Publisher</button>
-                    <button type="button" class="chip-btn" data-value="Auxiliary Pioneer">Auxiliary Pioneer</button>
-                    <button type="button" class="chip-btn" data-value="Regular Pioneer">Regular Pioneer</button>
+                    <button type="button" class="chip-btn" data-value="Publisher" id="chipPublisher">Publisher</button>
+                    <button type="button" class="chip-btn" data-value="Auxiliary Pioneer" id="chipAuxiliary">Auxiliary Pioneer</button>
+                    <button type="button" class="chip-btn" data-value="Regular Pioneer" id="chipRegular">Regular Pioneer</button>
                 </div>
                 <input type="hidden" id="category" name="category" required>
                 <div class="role-error-msg" id="roleError" style="display: none;">
-                    ⚠️ Please select your role before submitting.
+                    ⚠️ Please select your service status before submitting.
                 </div>
             </div>
 
-            <!-- S-4-E Report Table -->
+            <!-- S-4-E / S-4-TL Report Table -->
             <table class="report-table">
                 <tbody>
                     <tr>
-                        <td class="label-cell">
+                        <td class="label-cell" id="rowSharedText">
                             Check the box if you shared in any form of the ministry during the month
                         </td>
                         <td class="input-cell checkbox-cell">
@@ -58,7 +73,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="label-cell">
+                        <td class="label-cell" id="rowStudiesText">
                             Number of <em>different</em> Bible studies conducted
                         </td>
                         <td class="input-cell">
@@ -67,7 +82,7 @@
                     </tr>
                     <tr id="hoursRow" style="display: none;">
                         <td class="label-cell">
-                            Hours (if auxiliary, regular, or special pioneer or field missionary)
+                            <span id="rowHoursText">Hours (if auxiliary, regular, or special pioneer or field missionary)</span>
                             <span id="hoursBadge" class="req-badge required-mode">* Required</span>
                         </td>
                         <td class="input-cell">
@@ -79,22 +94,19 @@
 
             <!-- Comments Box -->
             <div class="comments-box">
-                <label for="remarks">Comments:</label>
+                <label for="remarks" id="commentsLabel">Comments:</label>
                 <textarea id="remarks" name="remarks" placeholder="Enter comments here..."></textarea>
             </div>
 
-            <!-- S-4-E Form Metadata Footer -->
+            <!-- S-4 Form Metadata Footer -->
             <div class="form-footer-meta">
-                <span>S-4-E 11/23</span>
+                <span id="footerCodeText">S-4-E 11/23</span>
                 <span>1/1</span>
             </div>
 
-            <button type="submit" id="submitBtn">Submit via WhatsApp</button>
+            <!-- Hidden until service status role is selected -->
+            <button type="submit" id="submitBtn" style="display: none;">Submit via WhatsApp</button>
         </form>
-
-        <footer>
-            <a href="https://jw-attendance.pages.dev/" target="_blank" rel="noopener noreferrer">Attendance Sharing</a>
-        </footer>
     </div>
     <script src="script.js"></script>
 </body>

@@ -4,76 +4,145 @@
     padding: 0;
 }
 
+html, body {
+    height: 100%;
+    overflow-x: hidden;
+}
+
 body {
     background-color: #f4f5f7;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Latha", "Mukta Malar", Helvetica, Arial, sans-serif;
     color: #111;
-    line-height: 1.5;
+    line-height: 1.4;
     -webkit-font-smoothing: antialiased;
-    padding: 16px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
 }
 
 .container {
-    max-width: 520px;
-    margin: 0 auto;
+    width: 100%;
+    max-width: 480px;
     background-color: #fff;
-    padding: 24px;
+    padding: 12px 14px;
     border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 header {
-    margin-bottom: 20px;
+    margin-bottom: 8px;
+}
+
+.info-note-container {
+    margin-bottom: 4px;
+}
+
+.tip-toggle-btn {
+    background: none;
+    border: none;
+    color: #2563eb;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 2px 0;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    outline: none;
+}
+
+.tip-toggle-btn .arrow {
+    font-size: 0.65rem;
+    transition: transform 0.2s ease;
+}
+
+.tip-toggle-btn.open .arrow {
+    transform: rotate(180deg);
 }
 
 .info-note {
     background-color: #eff6ff;
     border: 1px solid #bfdbfe;
-    border-radius: 8px;
-    padding: 12px;
-    font-size: 0.85rem;
+    border-radius: 6px;
+    padding: 6px 8px;
+    font-size: 0.78rem;
     color: #1e40af;
-    margin-bottom: 20px;
+    margin-top: 4px;
     text-align: left;
 }
 
 .info-note code {
     display: block;
     background-color: #dbeafe;
-    padding: 6px 8px;
+    padding: 3px 6px;
     border-radius: 4px;
-    margin-top: 6px;
+    margin-top: 4px;
     word-break: break-all;
     font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
-    font-size: 0.8rem;
+    font-size: 0.72rem;
     color: #1e3a8a;
 }
 
+/* Language Switcher Bar below tip */
+.lang-bar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 6px;
+    margin-bottom: 6px;
+}
+
+.lang-bar label {
+    font-size: 0.78rem;
+    color: #4b5563;
+    font-weight: 600;
+}
+
+.lang-bar select {
+    border: 1px solid #d1d5db;
+    background-color: #f9fafb;
+    border-radius: 6px;
+    padding: 2px 6px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #1f2937;
+    cursor: pointer;
+    outline: none;
+}
+
+.lang-bar select:focus {
+    border-color: #2563eb;
+}
+
 h1 {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     font-weight: 800;
     text-align: center;
     text-transform: uppercase;
-    margin-bottom: 20px;
-    letter-spacing: 0.8px;
+    margin-bottom: 6px;
+    letter-spacing: 0.5px;
     color: #000;
 }
 
 .top-fields {
-    margin-bottom: 20px;
+    margin-bottom: 8px;
 }
 
 .line-field {
     display: flex;
     align-items: flex-end;
-    margin-bottom: 16px;
+    margin-bottom: 8px;
 }
 
 .line-field label {
-    font-size: 1.05rem;
+    font-size: 0.92rem;
     font-weight: bold;
-    margin-right: 10px;
-    padding-bottom: 2px;
+    margin-right: 8px;
+    padding-bottom: 1px;
     white-space: nowrap;
 }
 
@@ -82,9 +151,9 @@ h1 {
     flex: 1;
     border: none;
     border-bottom: 2px dotted #000;
-    font-size: 1.05rem;
+    font-size: 0.92rem;
     font-family: inherit;
-    padding: 2px 6px;
+    padding: 1px 4px;
     background-color: transparent;
     outline: none;
     border-radius: 0;
@@ -98,9 +167,9 @@ h1 {
     -webkit-appearance: none;
     background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
     background-repeat: no-repeat;
-    background-position: right 6px center;
-    background-size: 16px;
-    padding-right: 26px;
+    background-position: right 4px center;
+    background-size: 14px;
+    padding-right: 22px;
 }
 
 .line-field input:focus,
@@ -112,9 +181,9 @@ h1 {
 .role-section {
     background-color: #fafafa;
     border: 1px solid #e5e7eb;
-    border-radius: 10px;
-    padding: 14px;
-    margin-bottom: 22px;
+    border-radius: 8px;
+    padding: 8px 10px;
+    margin-bottom: 8px;
     transition: border-color 0.2s, box-shadow 0.2s;
 }
 
@@ -126,9 +195,9 @@ h1 {
 
 .role-title {
     display: block;
-    font-size: 0.95rem;
+    font-size: 0.84rem;
     font-weight: bold;
-    margin-bottom: 10px;
+    margin-bottom: 6px;
     color: #374151;
 }
 
@@ -138,25 +207,24 @@ h1 {
 
 .chip-group {
     display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
+    gap: 6px;
 }
 
 .chip-btn {
-    flex: 1 1 auto;
-    min-width: 110px;
-    padding: 10px 14px;
+    flex: 1;
+    padding: 6px 6px;
     border: 1.5px solid #d1d5db;
     background-color: #fff;
     color: #374151;
-    border-radius: 20px;
-    font-size: 0.9rem;
+    border-radius: 16px;
+    font-size: 0.78rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
     text-align: center;
     outline: none;
     -webkit-tap-highlight-color: transparent;
+    white-space: nowrap;
 }
 
 .chip-btn:hover {
@@ -168,39 +236,39 @@ h1 {
     background-color: #1e3a8a;
     border-color: #1e3a8a;
     color: #ffffff;
-    box-shadow: 0 2px 6px rgba(30, 58, 138, 0.25);
+    box-shadow: 0 2px 5px rgba(30, 58, 138, 0.2);
 }
 
 .role-error-msg {
-    margin-top: 10px;
-    font-size: 0.85rem;
+    margin-top: 6px;
+    font-size: 0.78rem;
     color: #dc2626;
     font-weight: 600;
 }
 
-/* S-4-E Table */
+/* S-4 Table */
 .report-table {
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: 18px;
+    margin-bottom: 8px;
     border: 2px solid #000;
     background-color: #fff;
 }
 
 .report-table td {
     border: 1px solid #000;
-    padding: 12px;
-    font-size: 0.98rem;
+    padding: 6px 8px;
+    font-size: 0.82rem;
     vertical-align: middle;
 }
 
 .report-table td.label-cell {
-    width: 76%;
-    line-height: 1.4;
+    width: 74%;
+    line-height: 1.3;
 }
 
 .report-table td.input-cell {
-    width: 24%;
+    width: 26%;
     padding: 0;
     text-align: center;
     vertical-align: middle;
@@ -208,11 +276,11 @@ h1 {
 
 .req-badge {
     display: inline-block;
-    font-size: 0.78rem;
+    font-size: 0.7rem;
     font-weight: 700;
-    margin-left: 4px;
-    border-radius: 4px;
-    padding: 1px 5px;
+    margin-left: 2px;
+    border-radius: 3px;
+    padding: 1px 4px;
 }
 
 .req-badge.required-mode {
@@ -222,10 +290,10 @@ h1 {
 
 .input-cell input[type="number"] {
     width: 100%;
-    height: 52px;
+    height: 38px;
     border: none;
-    padding: 8px 4px;
-    font-size: 1.2rem;
+    padding: 4px;
+    font-size: 1.05rem;
     font-weight: bold;
     text-align: center;
     background-color: transparent;
@@ -239,9 +307,9 @@ h1 {
     margin: 0;
 }
 
-/* Checkbox Cell - Centered Rectangle Fit */
+/* Checkbox Cell - Centered */
 .checkbox-cell {
-    height: 52px;
+    height: 38px;
 }
 
 .custom-checkbox {
@@ -249,8 +317,8 @@ h1 {
     justify-content: center;
     align-items: center;
     position: relative;
-    width: 30px;
-    height: 30px;
+    width: 24px;
+    height: 24px;
     cursor: pointer;
     user-select: none;
     vertical-align: middle;
@@ -268,11 +336,11 @@ h1 {
     position: absolute;
     top: 0;
     left: 0;
-    height: 30px;
-    width: 30px;
+    height: 24px;
+    width: 24px;
     background-color: #fff;
     border: 2px solid #000;
-    border-radius: 4px;
+    border-radius: 3px;
     transition: background-color 0.15s ease, border-color 0.15s ease;
 }
 
@@ -296,28 +364,28 @@ h1 {
 }
 
 .custom-checkbox .checkmark:after {
-    left: 9px;
-    top: 4px;
-    width: 7px;
-    height: 14px;
+    left: 7px;
+    top: 3px;
+    width: 5px;
+    height: 11px;
     border: solid white;
-    border-width: 0 3px 3px 0;
+    border-width: 0 2.5px 2.5px 0;
     transform: rotate(45deg);
 }
 
 /* Comments Box */
 .comments-box {
     border: 2px solid #000;
-    padding: 10px 12px;
-    margin-bottom: 12px;
+    padding: 6px 8px;
+    margin-bottom: 8px;
     background-color: #fff;
 }
 
 .comments-box label {
     display: block;
-    font-size: 1rem;
+    font-size: 0.82rem;
     font-weight: 500;
-    margin-bottom: 6px;
+    margin-bottom: 3px;
     color: #000;
 }
 
@@ -325,35 +393,35 @@ h1 {
     width: 100%;
     border: none;
     outline: none;
-    font-size: 1rem;
+    font-size: 0.85rem;
     font-family: inherit;
     resize: vertical;
-    min-height: 75px;
+    min-height: 44px;
     background-color: transparent;
     color: #000;
 }
 
-/* Form Metadata Footer (S-4-E 11/23 and 1/1) */
+/* Form Metadata Footer (S-4-E / S-4-TL 11/23 and 1/1) */
 .form-footer-meta {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 0.82rem;
+    font-size: 0.76rem;
     font-family: Arial, sans-serif;
     color: #4b5563;
-    margin-bottom: 22px;
+    margin-bottom: 10px;
     padding: 0 2px;
 }
 
 /* Submit Button */
 button[type="submit"] {
     width: 100%;
-    padding: 15px;
+    padding: 12px;
     background-color: #25D366;
     color: white;
     border: none;
     border-radius: 8px;
-    font-size: 1.1rem;
+    font-size: 0.98rem;
     font-weight: 700;
     cursor: pointer;
     transition: background-color 0.2s ease, transform 0.1s ease;
@@ -375,22 +443,7 @@ button[type="submit"]:disabled {
     cursor: not-allowed;
 }
 
-footer {
-    margin-top: 25px;
-    text-align: center;
-}
-
-footer a {
-    color: #6b7280;
-    text-decoration: none;
-    font-size: 0.85rem;
-}
-
-footer a:hover {
-    text-decoration: underline;
-}
-
-/* Fix iOS zooming by ensuring inputs have 16px min font size on mobile */
+/* Mobile font scaling */
 @media screen and (max-width: 768px) {
     .line-field input,
     .line-field select,
