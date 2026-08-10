@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
             whatsappTitleFunc: (month) => `FIELD SERVICE REPORT for the Month of ${month.toUpperCase()}`,
             whatsappName: 'Name',
             whatsappRole: 'Service Status',
-            whatsappShared: 'Shared in the Ministry',
+            whatsappShared: 'Participated in Ministry',
             whatsappStudies: 'Bible Studies',
             whatsappHours: 'Hours',
             whatsappComments: 'Comments',
