@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const i18n = {
         en: {
             tipBtn: '💡 Tip: Adding recipient number',
-            tipText: 'For direct sharing, add recipient\'s WhatsApp number to link:',
+            tipText: 'For direct sharing, add the recipient\'s 10-digit WhatsApp number to the link:',
             title: 'FIELD SERVICE REPORT',
             nameLabel: 'Name:',
             namePlaceholder: 'Enter your name',
@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             rowShared: 'Check the box if you shared in any form of the ministry during the month',
             rowStudies: 'Number of <em>different</em> Bible studies conducted',
-            rowHours: 'Hours (if auxiliary, regular, or special pioneer or field missionary)',
+            rowHours: 'Hours (Auxiliary Pioneer or Regular Pioneer)',
             hoursReq: '* Required',
             commentsLabel: 'Comments:',
             commentsPlaceholder: 'Enter comments here...',
@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
             whatsappTitleFunc: (month) => `FIELD SERVICE REPORT for the Month of ${month.toUpperCase()}`,
             whatsappName: 'Name',
             whatsappRole: 'Service Status',
-            whatsappShared: 'Shared in Ministry',
+            whatsappShared: 'Shared in the Ministry',
             whatsappStudies: 'Bible Studies',
             whatsappHours: 'Hours',
             whatsappComments: 'Comments',
@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         ta: {
             tipBtn: '💡 குறிப்பு: பெறுநர் எண்ணைச் சேர்க்க',
-            tipText: 'எளிதாகப் பகிர, பெறவேண்டியவரின் WhatsApp எண்ணை இணைப்பில் சேர்க்கவும்:',
+            tipText: 'நேரடியாகப் பகிர, பெறுநரின் 10 இலக்க WhatsApp எண்ணை இணைப்பில் சேர்க்கவும்:',
             title: 'வெளி ஊழிய அறிக்கை',
             nameLabel: 'பெயர்:',
             namePlaceholder: 'உங்கள் பெயரை உள்ளிடவும்',
@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             rowShared: 'இந்த மாதத்தில் ஏதாவது ஒரு விதமான ஊழியத்தில் நீங்கள் கலந்துகொண்டிருந்தால் பெட்டியை டிக் செய்யவும்',
             rowStudies: 'நடத்தப்பட்ட வெவ்வேறு பைபிள் படிப்புகளின் எண்ணிக்கை',
-            rowHours: 'மணிநேரங்கள் (துணை, ஒழுங்கான, அல்லது விசேஷ பயனியர் அல்லது மிஷனரி மட்டும்)',
+            rowHours: 'மணிநேரங்கள் (துணைப் பயனியர் அல்லது ஒழுங்கான பயனியர்)',
             hoursReq: '* தேவை',
             commentsLabel: 'குறிப்புகள்:',
             commentsPlaceholder: 'இங்கே குறிப்புகளை உள்ளிடவும்...',
@@ -305,11 +305,16 @@ document.addEventListener('DOMContentLoaded', () => {
         submitBtn.textContent = t.submitBtnProgress;
         submitBtn.disabled = true;
 
-        // Check for 'to' parameter in URL
+        // Normalize 'to' parameter for WhatsApp URL
         const urlParams = new URLSearchParams(window.location.search);
         let to = urlParams.get('to');
         if (to) {
+            // Remove spaces, +, and non-numeric characters
             to = to.replace(/[^0-9]/g, '');
+            // If user enters a 10-digit Indian mobile number, prepend '91' automatically
+            if (to.length === 10) {
+                to = '91' + to;
+            }
         }
 
         let whatsappUrl = to 
