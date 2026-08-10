@@ -132,7 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const currentMonthIdx = now.getMonth();
 
         const options = [];
-        for (let i = -6; i <= 3; i++) {
+        for (let i = -1; i <= 0; i++) {
             const date = new Date(currentYear, currentMonthIdx + i, 1);
             const monthName = monthNames[date.getMonth()];
             const yearStr = date.getFullYear();
