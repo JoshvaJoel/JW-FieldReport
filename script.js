@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const i18n = {
         en: {
             tipBtn: '💡 Tip: Adding recipient number',
-            tipText: 'For direct sharing, add the recipient\'s 10-digit WhatsApp number to the link:',
+            tipText: 'For direct sharing, add the recipient\'s WhatsApp number with country code to the link:',
             title: 'FIELD SERVICE REPORT',
             nameLabel: 'Name:',
             namePlaceholder: 'Enter your name',
@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         ta: {
             tipBtn: '💡 குறிப்பு: பெறுநர் எண்ணைச் சேர்க்க',
-            tipText: 'நேரடியாகப் பகிர, பெறுநரின் 10 இலக்க WhatsApp எண்ணை இணைப்பில் சேர்க்கவும்:',
+            tipText: 'நேரடியாகப் பகிர, பெறுநரின் நாட்டுக் குறியீட்டுடன் கூடிய WhatsApp எண்ணை இணைப்பில் சேர்க்கவும்:',
             title: 'வெளி ஊழிய அறிக்கை',
             nameLabel: 'பெயர்:',
             namePlaceholder: 'உங்கள் பெயரை உள்ளிடவும்',
@@ -310,10 +310,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (to) {
             // Remove spaces, +, and non-numeric characters
             to = to.replace(/[^0-9]/g, '');
-            // If user enters a 10-digit Indian mobile number, prepend '91' automatically
-            if (to.length === 10) {
-                to = '91' + to;
-            }
         }
 
         let whatsappUrl = to 
