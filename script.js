@@ -201,30 +201,12 @@ document.addEventListener('DOMContentLoaded', () => {
             .replace(/"/g, '&quot;');
     }
 
-    const checkmarkElem = document.querySelector('.checkmark');
-
-    function triggerCheckboxBlink() {
-        if (!checkmarkElem) return;
-        checkmarkElem.classList.remove('blink-pulse');
-        void checkmarkElem.offsetWidth; // Force reflow
-        checkmarkElem.classList.add('blink-pulse');
-    }
-
-    if (sharedMinistryCheckbox) {
-        sharedMinistryCheckbox.addEventListener('change', () => {
-            if (checkmarkElem) {
-                checkmarkElem.classList.remove('blink-pulse');
-            }
-        });
-    }
-
     // Helper: Reset Form Fields (keep selected month)
     function resetFormFields() {
         nameInput.value = '';
         categoryInput.value = '';
         chipButtons.forEach(c => c.classList.remove('active'));
         sharedMinistryCheckbox.checked = false;
-        if (checkmarkElem) checkmarkElem.classList.remove('blink-pulse');
         bibleStudiesInput.value = '';
         hoursInput.value = '';
         hoursRow.style.display = 'none';
@@ -393,10 +375,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!form.checkValidity()) {
             form.reportValidity();
             return;
-        }
-
-        if (!sharedMinistryCheckbox.checked) {
-            triggerCheckboxBlink();
         }
 
         const roleLocalized = t.roles[selectedRoleKey] || selectedRoleKey;
