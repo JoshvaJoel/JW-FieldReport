@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const commentsLabel = document.getElementById('commentsLabel');
     
     const actionGroup = document.getElementById('actionGroup');
+    const moreReportsText = document.getElementById('moreReportsText');
     const addReportBtn = document.getElementById('addReportBtn');
     const reportsSummarySection = document.getElementById('reportsSummarySection');
     const summaryTitle = document.getElementById('summaryTitle');
@@ -66,8 +67,9 @@ document.addEventListener('DOMContentLoaded', () => {
             hoursReq: '* Required',
             commentsLabel: 'Comments:',
             commentsPlaceholder: '',
-            addBtn: '➕ Add Report to List',
-            updateBtn: '✓ Update Report',
+            moreReportsQuestion: 'More reports?',
+            addBtn: '➕ Add',
+            updateBtn: '✓ Update',
             summaryTitleText: 'Added Reports:',
             editBtnText: 'Edit ✏️',
             deleteBtnText: 'Remove 🗑️',
@@ -107,8 +109,9 @@ document.addEventListener('DOMContentLoaded', () => {
             hoursReq: '* தேவை',
             commentsLabel: 'குறிப்புகள்:',
             commentsPlaceholder: '',
-            addBtn: '➕ பட்டியலில் சேர்க்க',
-            updateBtn: '✓ புதுப்பிக்குக',
+            moreReportsQuestion: 'மேலும் அறிக்கைகளா?',
+            addBtn: '➕ சேர்',
+            updateBtn: '✓ புதுப்பி',
             summaryTitleText: 'சேர்க்கப்பட்ட அறிக்கைகள்:',
             editBtnText: 'திருத்து ✏️',
             deleteBtnText: 'நீக்கு 🗑️',
@@ -288,6 +291,9 @@ document.addEventListener('DOMContentLoaded', () => {
         commentsLabel.textContent = t.commentsLabel;
         remarksInput.placeholder = t.commentsPlaceholder;
 
+        if (moreReportsText) {
+            moreReportsText.textContent = t.moreReportsQuestion;
+        }
         addReportBtn.textContent = (editingIndex >= 0) ? t.updateBtn : t.addBtn;
         
         populateMonthDropdown(lang);
