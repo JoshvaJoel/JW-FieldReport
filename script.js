@@ -12,6 +12,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const chipPublisher = document.getElementById('chipPublisher');
     const chipAuxiliary = document.getElementById('chipAuxiliary');
     const chipRegular = document.getElementById('chipRegular');
+    const chipSpecial = document.getElementById('chipSpecial');
+    const chipMissionary = document.getElementById('chipMissionary');
     
     const sharedMinistryCheckbox = document.getElementById('sharedMinistry');
     const rowSharedText = document.getElementById('rowSharedText');
@@ -59,11 +61,13 @@ document.addEventListener('DOMContentLoaded', () => {
             roles: {
                 'Publisher': 'Publisher',
                 'Auxiliary Pioneer': 'Auxiliary Pioneer',
-                'Regular Pioneer': 'Regular Pioneer'
+                'Regular Pioneer': 'Regular Pioneer',
+                'Special Pioneer': 'Special Pioneer',
+                'Missionary': 'Missionary'
             },
             rowShared: 'Check the box if you shared in any form of the ministry during the month',
             rowStudies: 'Number of <em>different</em> Bible studies conducted',
-            rowHours: 'Hours (Auxiliary Pioneer or Regular Pioneer)',
+            rowHours: 'Hours (Pioneer or Missionary)',
             hoursReq: '* Required',
             commentsLabel: 'Comments:',
             commentsPlaceholder: '',
@@ -101,11 +105,13 @@ document.addEventListener('DOMContentLoaded', () => {
             roles: {
                 'Publisher': 'பிரஸ்தாபி',
                 'Auxiliary Pioneer': 'துணை பயனியர்',
-                'Regular Pioneer': 'ஒழுங்கான பயனியர்'
+                'Regular Pioneer': 'ஒழுங்கான பயனியர்',
+                'Special Pioneer': 'சிறப்பு பயனியர்',
+                'Missionary': 'மிஷனரி'
             },
             rowShared: 'இந்த மாதத்தில் ஏதாவது ஒரு விதமான ஊழியத்தில் நீங்கள் கலந்துகொண்டிருந்தால் பெட்டியை டிக் செய்யவும்',
             rowStudies: 'நடத்தப்பட்ட வெவ்வேறு பைபிள் படிப்புகளின் எண்ணிக்கை',
-            rowHours: 'மணிநேரங்கள் (துணைப் பயனியர் அல்லது ஒழுங்கான பயனியர்)',
+            rowHours: 'மணிநேரங்கள் (பயனியர் அல்லது மிஷனரி)',
             hoursReq: '* தேவை',
             commentsLabel: 'குறிப்புகள்:',
             commentsPlaceholder: '',
@@ -237,7 +243,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (report.bibleStudies !== '') {
                 detailsText += ` | ${t.whatsappStudies}: ${report.bibleStudies}`;
             }
-            if ((report.selectedRoleKey === 'Auxiliary Pioneer' || report.selectedRoleKey === 'Regular Pioneer') && report.hours !== '') {
+            if (['Auxiliary Pioneer', 'Regular Pioneer', 'Special Pioneer', 'Missionary'].includes(report.selectedRoleKey) && report.hours !== '') {
                 detailsText += ` | ${t.whatsappHours}: ${report.hours}`;
             }
             if (report.remarks !== '') {
@@ -282,6 +288,8 @@ document.addEventListener('DOMContentLoaded', () => {
         chipPublisher.textContent = t.roles['Publisher'];
         chipAuxiliary.textContent = t.roles['Auxiliary Pioneer'];
         chipRegular.textContent = t.roles['Regular Pioneer'];
+        if (chipSpecial) chipSpecial.textContent = t.roles['Special Pioneer'];
+        if (chipMissionary) chipMissionary.textContent = t.roles['Missionary'];
         
         rowSharedText.innerHTML = t.rowShared;
         rowStudiesText.innerHTML = t.rowStudies;
@@ -332,8 +340,8 @@ document.addEventListener('DOMContentLoaded', () => {
             actionGroup.style.display = 'block';
             submitBtn.style.display = 'block';
 
-            // Show Hours ONLY for Auxiliary Pioneer or Regular Pioneer; Hide for Publisher
-            if (selectedRole === 'Auxiliary Pioneer' || selectedRole === 'Regular Pioneer') {
+            // Show Hours ONLY for Pioneer or Missionary roles; Hide for Publisher
+            if (['Auxiliary Pioneer', 'Regular Pioneer', 'Special Pioneer', 'Missionary'].includes(selectedRole)) {
                 hoursRow.style.display = 'table-row';
                 hoursInput.required = true;
             } else {
@@ -417,7 +425,7 @@ document.addEventListener('DOMContentLoaded', () => {
             roleSection.classList.remove('has-error');
             roleError.style.display = 'none';
 
-            if (report.selectedRoleKey === 'Auxiliary Pioneer' || report.selectedRoleKey === 'Regular Pioneer') {
+            if (['Auxiliary Pioneer', 'Regular Pioneer', 'Special Pioneer', 'Missionary'].includes(report.selectedRoleKey)) {
                 hoursRow.style.display = 'table-row';
                 hoursInput.required = true;
             } else {
@@ -523,7 +531,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (r.bibleStudies !== '') {
                 message += `${t.whatsappStudies} ${r.bibleStudies}\n`;
             }
-            if ((r.selectedRoleKey === 'Auxiliary Pioneer' || r.selectedRoleKey === 'Regular Pioneer') && r.hours !== '') {
+            if (['Auxiliary Pioneer', 'Regular Pioneer', 'Special Pioneer', 'Missionary'].includes(r.selectedRoleKey) && r.hours !== '') {
                 message += `${t.whatsappHours} ${r.hours}\n`;
             }
             if (r.remarks !== '') {
@@ -539,7 +547,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (r.bibleStudies !== '') {
                     message += `${t.whatsappStudies} ${r.bibleStudies}\n`;
                 }
-                if ((r.selectedRoleKey === 'Auxiliary Pioneer' || r.selectedRoleKey === 'Regular Pioneer') && r.hours !== '') {
+                if (['Auxiliary Pioneer', 'Regular Pioneer', 'Special Pioneer', 'Missionary'].includes(r.selectedRoleKey) && r.hours !== '') {
                     message += `${t.whatsappHours} ${r.hours}\n`;
                 }
                 if (r.remarks !== '') {
