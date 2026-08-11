@@ -116,6 +116,17 @@
                 <textarea id="remarks" name="remarks"></textarea>
             </div>
 
+            <!-- Action Buttons Group -->
+            <div class="action-buttons-group" id="actionGroup" style="display: none;">
+                <button type="button" class="btn-add-report" id="addReportBtn">➕ Add Report to List</button>
+            </div>
+
+            <!-- Queued Reports Summary Section -->
+            <div class="reports-summary-section" id="reportsSummarySection" style="display: none;">
+                <h3 class="summary-title" id="summaryTitle">Added Reports:</h3>
+                <div class="summary-cards-list" id="summaryCardsList"></div>
+            </div>
+
             <!-- Hidden until service status role is selected -->
             <button type="submit" id="submitBtn" style="display: none;">Submit via WhatsApp</button>
         </form>

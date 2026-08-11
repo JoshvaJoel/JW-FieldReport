@@ -26,6 +26,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const remarksInput = document.getElementById('remarks');
     const commentsLabel = document.getElementById('commentsLabel');
     
+    const actionGroup = document.getElementById('actionGroup');
+    const addReportBtn = document.getElementById('addReportBtn');
+    const reportsSummarySection = document.getElementById('reportsSummarySection');
+    const summaryTitle = document.getElementById('summaryTitle');
+    const summaryCardsList = document.getElementById('summaryCardsList');
+    
     const formTitle = document.getElementById('formTitle');
     const submitBtn = document.getElementById('submitBtn');
     
@@ -34,6 +40,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const tipNoteDesc = document.getElementById('tipNoteDesc');
     const infoNote = document.getElementById('infoNote');
     const langSelect = document.getElementById('langSelect');
+
+    let reportsList = [];
+    let editingIndex = -1;
 
     // Translation Dictionary
     const i18n = {
@@ -57,7 +66,14 @@ document.addEventListener('DOMContentLoaded', () => {
             hoursReq: '* Required',
             commentsLabel: 'Comments:',
             commentsPlaceholder: '',
-            submitBtn: 'Submit via WhatsApp',
+            addBtn: '➕ Add Report to List',
+            updateBtn: '✓ Update Report',
+            summaryTitleText: 'Added Reports:',
+            editBtnText: 'Edit ✏️',
+            deleteBtnText: 'Remove 🗑️',
+            reportNumHeader: (num) => `*--- Report ${num} ---*`,
+            submitBtnSingle: 'Submit via WhatsApp',
+            submitBtnMultiFunc: (count) => `Submit ${count} Reports via WhatsApp`,
             submitBtnProgress: 'Opening WhatsApp...',
             whatsappTitle: '*FIELD SERVICE REPORT*',
             whatsappMonth: '*Month:*',
@@ -91,7 +107,14 @@ document.addEventListener('DOMContentLoaded', () => {
             hoursReq: '* தேவை',
             commentsLabel: 'குறிப்புகள்:',
             commentsPlaceholder: '',
-            submitBtn: 'வாட்ஸ்அப் வழியாக அனுப்புக',
+            addBtn: '➕ பட்டியலில் சேர்க்க',
+            updateBtn: '✓ புதுப்பிக்குக',
+            summaryTitleText: 'சேர்க்கப்பட்ட அறிக்கைகள்:',
+            editBtnText: 'திருத்து ✏️',
+            deleteBtnText: 'நீக்கு 🗑️',
+            reportNumHeader: (num) => `*--- அறிக்கை ${num} ---*`,
+            submitBtnSingle: 'வாட்ஸ்அப் வழியாக அனுப்புக',
+            submitBtnMultiFunc: (count) => `${count} அறிக்கைகளை வாட்ஸ்அப் வழியாக அனுப்புக`,
             submitBtnProgress: 'WhatsApp திறக்கிறது...',
             whatsappTitle: '*வெளி ஊழிய அறிக்கை*',
             whatsappMonth: '*மாதம்:*',
@@ -160,6 +183,83 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Helper: Escape HTML
+    function escapeHtml(str) {
+        return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;');
+    }
+
+    // Helper: Reset Form Fields (keep selected month)
+    function resetFormFields() {
+        nameInput.value = '';
+        categoryInput.value = '';
+        chipButtons.forEach(c => c.classList.remove('active'));
+        sharedMinistryCheckbox.checked = true;
+        bibleStudiesInput.value = '';
+        hoursInput.value = '';
+        hoursRow.style.display = 'none';
+        hoursInput.required = false;
+        remarksInput.value = '';
+        editingIndex = -1;
+
+        const t = i18n[currentLang];
+        addReportBtn.textContent = t.addBtn;
+        addReportBtn.classList.remove('is-editing');
+    }
+
+    // Helper: Render Queued Reports Summary List
+    function renderReportsList() {
+        const t = i18n[currentLang];
+        summaryCardsList.innerHTML = '';
+
+        if (reportsList.length === 0) {
+            reportsSummarySection.style.display = 'none';
+            if (!submitBtn.disabled) {
+                submitBtn.textContent = t.submitBtnSingle;
+            }
+            return;
+        }
+
+        reportsSummarySection.style.display = 'block';
+        summaryTitle.textContent = `${t.summaryTitleText} (${reportsList.length})`;
+
+        reportsList.forEach((report, idx) => {
+            const card = document.createElement('div');
+            card.className = 'report-card';
+
+            let detailsText = `${t.whatsappShared}: ${report.sharedMinistry}`;
+            if (report.bibleStudies !== '') {
+                detailsText += ` | ${t.whatsappStudies}: ${report.bibleStudies}`;
+            }
+            if ((report.selectedRoleKey === 'Auxiliary Pioneer' || report.selectedRoleKey === 'Regular Pioneer') && report.hours !== '') {
+                detailsText += ` | ${t.whatsappHours}: ${report.hours}`;
+            }
+            if (report.remarks !== '') {
+                detailsText += ` | ${t.whatsappComments}: ${report.remarks}`;
+            }
+
+            card.innerHTML = `
+                <div class="report-card-header">
+                    <span class="card-name">${escapeHtml(report.name)}</span>
+                    <span class="card-role-badge">${escapeHtml(report.roleLocalized)}</span>
+                </div>
+                <div class="report-card-details">${escapeHtml(detailsText)}</div>
+                <div class="card-actions">
+                    <button type="button" class="card-action-btn card-btn-edit" data-index="${idx}">${t.editBtnText}</button>
+                    <button type="button" class="card-action-btn card-btn-delete" data-index="${idx}">${t.deleteBtnText}</button>
+                </div>
+            `;
+            summaryCardsList.appendChild(card);
+        });
+
+        if (!submitBtn.disabled) {
+            submitBtn.textContent = t.submitBtnMultiFunc(reportsList.length);
+        }
+    }
+
     // 2. Language Switcher Application
     function applyLanguage(lang) {
         currentLang = lang;
@@ -187,12 +287,11 @@ document.addEventListener('DOMContentLoaded', () => {
         
         commentsLabel.textContent = t.commentsLabel;
         remarksInput.placeholder = t.commentsPlaceholder;
-        
-        if (!submitBtn.disabled) {
-            submitBtn.textContent = t.submitBtn;
-        }
 
+        addReportBtn.textContent = (editingIndex >= 0) ? t.updateBtn : t.addBtn;
+        
         populateMonthDropdown(lang);
+        renderReportsList();
     }
 
     langSelect.addEventListener('change', (e) => {
@@ -207,7 +306,7 @@ document.addEventListener('DOMContentLoaded', () => {
         nameInput.value = savedName;
     }
 
-    // 4. Handle Role Selection & Hide/Show Submit Button
+    // 4. Handle Role Selection & Hide/Show Submit Button & Action Group
     chipButtons.forEach(btn => {
         btn.addEventListener('click', () => {
             const selectedRole = btn.getAttribute('data-value');
@@ -223,7 +322,8 @@ document.addEventListener('DOMContentLoaded', () => {
             roleSection.classList.remove('has-error');
             roleError.style.display = 'none';
 
-            // SHOW submit button once a role is selected
+            // SHOW action buttons & submit button once a role is selected
+            actionGroup.style.display = 'block';
             submitBtn.style.display = 'block';
 
             // Show Hours ONLY for Auxiliary Pioneer or Regular Pioneer; Hide for Publisher
@@ -239,15 +339,18 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 5. Form Submission Handling
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-
+    // 5. Add / Update Report to Queue Listener
+    addReportBtn.addEventListener('click', () => {
         const t = i18n[currentLang];
         const name = nameInput.value.trim();
         const selectedRoleKey = categoryInput.value;
 
-        // Check if role is selected (safety check)
+        if (!name) {
+            nameInput.reportValidity();
+            nameInput.focus();
+            return;
+        }
+
         if (!selectedRoleKey) {
             roleSection.classList.add('has-error');
             roleError.style.display = 'block';
@@ -255,45 +358,191 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Validate basic native fields
         if (!form.checkValidity()) {
             form.reportValidity();
             return;
         }
 
-        // Save name for convenience
-        if (name) {
-            localStorage.setItem('jw_report_name', name);
-        }
-
-        // Get localized role name
         const roleLocalized = t.roles[selectedRoleKey] || selectedRoleKey;
-
-        // Get values
-        const month = monthSelect.value;
         const sharedMinistry = sharedMinistryCheckbox.checked ? t.yes : t.no;
         const bibleStudies = bibleStudiesInput.value.trim();
         const hours = hoursInput.value.trim();
         const remarks = remarksInput.value.trim();
 
-        // Construct formatted report message matching standard template
+        const reportObj = {
+            name: name,
+            selectedRoleKey: selectedRoleKey,
+            roleLocalized: roleLocalized,
+            sharedMinistry: sharedMinistry,
+            bibleStudies: bibleStudies,
+            hours: hours,
+            remarks: remarks
+        };
+
+        if (editingIndex >= 0) {
+            reportsList[editingIndex] = reportObj;
+        } else {
+            reportsList.push(reportObj);
+        }
+
+        resetFormFields();
+        renderReportsList();
+    });
+
+    // 6. Summary Cards Edit / Delete Delegate Listener
+    summaryCardsList.addEventListener('click', (e) => {
+        const target = e.target;
+        if (!target.classList.contains('card-action-btn')) return;
+
+        const idx = parseInt(target.getAttribute('data-index'), 10);
+        if (isNaN(idx) || idx < 0 || idx >= reportsList.length) return;
+
+        const t = i18n[currentLang];
+
+        if (target.classList.contains('card-btn-edit')) {
+            const report = reportsList[idx];
+            nameInput.value = report.name;
+            categoryInput.value = report.selectedRoleKey;
+
+            chipButtons.forEach(c => {
+                c.classList.toggle('active', c.getAttribute('data-value') === report.selectedRoleKey);
+            });
+
+            roleSection.classList.remove('has-error');
+            roleError.style.display = 'none';
+
+            if (report.selectedRoleKey === 'Auxiliary Pioneer' || report.selectedRoleKey === 'Regular Pioneer') {
+                hoursRow.style.display = 'table-row';
+                hoursInput.required = true;
+            } else {
+                hoursRow.style.display = 'none';
+                hoursInput.required = false;
+            }
+
+            sharedMinistryCheckbox.checked = (report.sharedMinistry === t.yes);
+            bibleStudiesInput.value = report.bibleStudies;
+            hoursInput.value = report.hours;
+            remarksInput.value = report.remarks;
+
+            editingIndex = idx;
+            addReportBtn.textContent = t.updateBtn;
+            addReportBtn.classList.add('is-editing');
+
+            actionGroup.style.display = 'block';
+            submitBtn.style.display = 'block';
+
+            nameInput.focus();
+            nameInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } else if (target.classList.contains('card-btn-delete')) {
+            reportsList.splice(idx, 1);
+            if (editingIndex === idx) {
+                resetFormFields();
+            } else if (editingIndex > idx) {
+                editingIndex--;
+            }
+            renderReportsList();
+        }
+    });
+
+    // 7. Form Submission Handling
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const t = i18n[currentLang];
+        const month = monthSelect.value;
+
+        // Auto-add currently filled form if user filled it but didn't tap "Add"
+        const currentName = nameInput.value.trim();
+        const currentRoleKey = categoryInput.value;
+
+        if (currentName && currentRoleKey) {
+            if (form.checkValidity()) {
+                const roleLocalized = t.roles[currentRoleKey] || currentRoleKey;
+                const sharedMinistry = sharedMinistryCheckbox.checked ? t.yes : t.no;
+                const bibleStudies = bibleStudiesInput.value.trim();
+                const hours = hoursInput.value.trim();
+                const remarks = remarksInput.value.trim();
+
+                const reportObj = {
+                    name: currentName,
+                    selectedRoleKey: currentRoleKey,
+                    roleLocalized: roleLocalized,
+                    sharedMinistry: sharedMinistry,
+                    bibleStudies: bibleStudies,
+                    hours: hours,
+                    remarks: remarks
+                };
+
+                if (editingIndex >= 0) {
+                    reportsList[editingIndex] = reportObj;
+                } else {
+                    reportsList.push(reportObj);
+                }
+                resetFormFields();
+                renderReportsList();
+            } else {
+                form.reportValidity();
+                return;
+            }
+        }
+
+        if (reportsList.length === 0) {
+            if (!currentRoleKey) {
+                roleSection.classList.add('has-error');
+                roleError.style.display = 'block';
+                roleSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                return;
+            }
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+        }
+
+        // Save last entered name for convenience
+        if (reportsList.length > 0) {
+            localStorage.setItem('jw_report_name', reportsList[reportsList.length - 1].name);
+        }
+
+        // Construct formatted report message
         let message = `${t.whatsappTitle}\n`;
         message += `${t.whatsappMonth} ${month}\n\n`;
-        message += `${t.whatsappName} ${name}\n`;
-        message += `${t.whatsappRole} ${roleLocalized}\n\n`;
-        message += `${t.whatsappShared} ${sharedMinistry}\n`;
 
-        if (bibleStudies !== '') {
-            message += `${t.whatsappStudies} ${bibleStudies}\n`;
-        }
+        if (reportsList.length === 1) {
+            const r = reportsList[0];
+            message += `${t.whatsappName} ${r.name}\n`;
+            message += `${t.whatsappRole} ${r.roleLocalized}\n\n`;
+            message += `${t.whatsappShared} ${r.sharedMinistry}\n`;
 
-        // Include hours only if Pioneer role and hours provided
-        if ((selectedRoleKey === 'Auxiliary Pioneer' || selectedRoleKey === 'Regular Pioneer') && hours !== '') {
-            message += `${t.whatsappHours} ${hours}\n`;
-        }
+            if (r.bibleStudies !== '') {
+                message += `${t.whatsappStudies} ${r.bibleStudies}\n`;
+            }
+            if ((r.selectedRoleKey === 'Auxiliary Pioneer' || r.selectedRoleKey === 'Regular Pioneer') && r.hours !== '') {
+                message += `${t.whatsappHours} ${r.hours}\n`;
+            }
+            if (r.remarks !== '') {
+                message += `${t.whatsappComments} ${r.remarks}\n`;
+            }
+        } else {
+            reportsList.forEach((r, idx) => {
+                message += `${t.reportNumHeader(idx + 1)}\n`;
+                message += `${t.whatsappName} ${r.name}\n`;
+                message += `${t.whatsappRole} ${r.roleLocalized}\n\n`;
+                message += `${t.whatsappShared} ${r.sharedMinistry}\n`;
 
-        if (remarks !== '') {
-            message += `${t.whatsappComments} ${remarks}\n`;
+                if (r.bibleStudies !== '') {
+                    message += `${t.whatsappStudies} ${r.bibleStudies}\n`;
+                }
+                if ((r.selectedRoleKey === 'Auxiliary Pioneer' || r.selectedRoleKey === 'Regular Pioneer') && r.hours !== '') {
+                    message += `${t.whatsappHours} ${r.hours}\n`;
+                }
+                if (r.remarks !== '') {
+                    message += `${t.whatsappComments} ${r.remarks}\n`;
+                }
+                if (idx < reportsList.length - 1) {
+                    message += `\n`;
+                }
+            });
         }
 
         // Encode message for WhatsApp
@@ -308,7 +557,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const urlParams = new URLSearchParams(window.location.search);
         let to = urlParams.get('to');
         if (to) {
-            // Remove spaces, +, and non-numeric characters
             to = to.replace(/[^0-9]/g, '');
         }
 
