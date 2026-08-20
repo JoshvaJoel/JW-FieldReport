@@ -107,6 +107,7 @@ JW FieldReport/
 ├── script.js        # Form validation, i18n dictionary, multi-report queue logic
 ├── favicon.ico      # Application favicon icon
 ├── robots.txt       # Web crawler indexing configuration
+├── LICENSE          # MIT License file
 └── README.md        # Project documentation
 ```
 
@@ -122,4 +123,6 @@ JW FieldReport/
 
 ## 📄 License
 
-This project is open-source and intended for personal and congregation field service reporting support.
+This project is licensed under the [MIT License](LICENSE).
+
+It is intended to support personal and congregation field service reporting.
