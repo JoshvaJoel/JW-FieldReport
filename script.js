@@ -41,6 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const tipToggleBtn = document.getElementById('tipToggleBtn');
     const tipBtnText = document.getElementById('tipBtnText');
     const tipNoteDesc = document.getElementById('tipNoteDesc');
+    const sampleLinkLabel = document.getElementById('sampleLinkLabel');
     const infoNote = document.getElementById('infoNote');
     const langSelect = document.getElementById('langSelect');
 
@@ -52,6 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
         en: {
             tipBtn: '💡 Tip: Adding recipient number',
             tipText: 'For direct sharing, add the recipient\'s WhatsApp number with country code to the link:',
+            sampleLink: 'Sample link:',
             title: 'FIELD SERVICE REPORT',
             nameLabel: 'Name:',
             namePlaceholder: 'Enter your name',
@@ -96,6 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ta: {
             tipBtn: '💡 குறிப்பு: பெறுநர் எண்ணைச் சேர்க்க',
             tipText: 'நேரடியாகப் பகிர, பெறுநரின் நாட்டுக் குறியீட்டுடன் கூடிய WhatsApp எண்ணை இணைப்பில் சேர்க்கவும்:',
+            sampleLink: 'மாதிரி இணைப்பு:',
             title: 'வெளி ஊழிய அறிக்கை',
             nameLabel: 'பெயர்:',
             namePlaceholder: 'உங்கள் பெயரை உள்ளிடவும்',
@@ -277,6 +280,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         tipBtnText.textContent = t.tipBtn;
         tipNoteDesc.textContent = t.tipText;
+        if (sampleLinkLabel) sampleLinkLabel.textContent = t.sampleLink;
         formTitle.textContent = t.title;
         nameLabel.textContent = t.nameLabel;
         nameInput.placeholder = t.namePlaceholder;
