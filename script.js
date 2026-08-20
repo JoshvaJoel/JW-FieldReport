@@ -44,6 +44,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const sampleLinkLabel = document.getElementById('sampleLinkLabel');
     const infoNote = document.getElementById('infoNote');
     const langSelect = document.getElementById('langSelect');
+    
+    const githubInfoBtn = document.getElementById('githubInfoBtn');
+    const githubPopover = document.getElementById('githubPopover');
+    const githubInfoDesc = document.getElementById('githubInfoDesc');
+    const githubLinkBtn = document.getElementById('githubLinkBtn');
 
     let reportsList = [];
     let editingIndex = -1;
@@ -54,6 +59,8 @@ document.addEventListener('DOMContentLoaded', () => {
             tipBtn: '💡 Tip: Adding recipient number',
             tipText: 'For direct sharing, add the recipient\'s WhatsApp number with country code to the link:',
             sampleLink: 'Sample link:',
+            githubInfoDesc: 'Check the source code on GitHub:',
+            githubClickHere: 'Click Here',
             title: 'FIELD SERVICE REPORT',
             nameLabel: 'Name:',
             namePlaceholder: 'Enter your name',
@@ -99,6 +106,8 @@ document.addEventListener('DOMContentLoaded', () => {
             tipBtn: '💡 குறிப்பு: பெறுநர் எண்ணைச் சேர்க்க',
             tipText: 'நேரடியாகப் பகிர, பெறுநரின் நாட்டுக் குறியீட்டுடன் கூடிய WhatsApp எண்ணை இணைப்பில் சேர்க்கவும்:',
             sampleLink: 'மாதிரி இணைப்பு:',
+            githubInfoDesc: 'Check the source code on GitHub:',
+            githubClickHere: 'Click Here',
             title: 'வெளி ஊழிய அறிக்கை',
             nameLabel: 'பெயர்:',
             namePlaceholder: 'உங்கள் பெயரை உள்ளிடவும்',
@@ -147,12 +156,26 @@ document.addEventListener('DOMContentLoaded', () => {
         langSelect.value = currentLang;
     }
 
-    // 0. Collapsible Tip Toggle
+    // 0. Collapsible Tip Toggle & GitHub Popover Toggle
     if (tipToggleBtn && infoNote) {
         tipToggleBtn.addEventListener('click', () => {
             const isHidden = infoNote.style.display === 'none';
             infoNote.style.display = isHidden ? 'block' : 'none';
             tipToggleBtn.classList.toggle('open', isHidden);
+        });
+    }
+
+    if (githubInfoBtn && githubPopover) {
+        githubInfoBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isHidden = githubPopover.style.display === 'none';
+            githubPopover.style.display = isHidden ? 'block' : 'none';
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!githubPopover.contains(e.target) && e.target !== githubInfoBtn) {
+                githubPopover.style.display = 'none';
+            }
         });
     }
 
@@ -281,6 +304,8 @@ document.addEventListener('DOMContentLoaded', () => {
         tipBtnText.textContent = t.tipBtn;
         tipNoteDesc.textContent = t.tipText;
         if (sampleLinkLabel) sampleLinkLabel.textContent = t.sampleLink;
+        if (githubInfoDesc) githubInfoDesc.textContent = t.githubInfoDesc;
+        if (githubLinkBtn) githubLinkBtn.textContent = t.githubClickHere;
         formTitle.textContent = t.title;
         nameLabel.textContent = t.nameLabel;
         nameInput.placeholder = t.namePlaceholder;

@@ -118,6 +118,79 @@ header {
     border-color: #2563eb;
 }
 
+/* GitHub Info Popover */
+.info-popover-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.info-toggle-btn {
+    background: none;
+    border: none;
+    font-size: 0.88rem;
+    cursor: pointer;
+    padding: 0 2px;
+    opacity: 0.8;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+    outline: none;
+    line-height: 1;
+}
+
+.info-toggle-btn:hover {
+    opacity: 1;
+    transform: scale(1.18);
+}
+
+.github-popover {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    width: 210px;
+    background-color: #ffffff;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 8px 10px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+    z-index: 100;
+    font-size: 0.78rem;
+    color: #334155;
+    text-align: left;
+}
+
+.github-popover::before {
+    content: "";
+    position: absolute;
+    top: -5px;
+    right: 6px;
+    width: 8px;
+    height: 8px;
+    background-color: #ffffff;
+    border-left: 1.5px solid #cbd5e1;
+    border-top: 1.5px solid #cbd5e1;
+    transform: rotate(45deg);
+}
+
+.github-popover p {
+    margin-bottom: 6px;
+    line-height: 1.35;
+    font-weight: 500;
+    color: #334155;
+}
+
+.github-link-btn {
+    display: inline-block;
+    color: #2563eb;
+    font-weight: 700;
+    text-decoration: none;
+    transition: color 0.15s ease;
+}
+
+.github-link-btn:hover {
+    color: #1d4ed8;
+    text-decoration: underline;
+}
+
 h1 {
     font-size: 1.2rem;
     font-weight: 800;
